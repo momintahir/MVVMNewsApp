@@ -18,8 +18,8 @@ class SearchNewsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view:View= inflater.inflate(R.layout.fragment_search_news, container, false)
-        viewModel=(activity as NewsActivity).viewModel
+        val view: View = inflater.inflate(R.layout.fragment_search_news, container, false)
+        viewModel = (activity as NewsActivity).viewModel
 
         return view
     }

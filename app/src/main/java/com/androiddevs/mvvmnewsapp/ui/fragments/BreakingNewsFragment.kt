@@ -12,14 +12,14 @@ import com.androiddevs.mvvmnewsapp.ui.viewmodels.NewsViewModel
 
 class BreakingNewsFragment : Fragment() {
 
-    lateinit var viewModel:NewsViewModel
+    lateinit var viewModel: NewsViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view:View = inflater.inflate(R.layout.fragment_breaking_news, container, false)
-        viewModel=(activity as NewsActivity).viewModel
+        val view: View = inflater.inflate(R.layout.fragment_breaking_news, container, false)
+        viewModel = (activity as NewsActivity).viewModel
         return view
     }
 

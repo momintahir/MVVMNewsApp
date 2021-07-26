@@ -19,8 +19,8 @@ class ArticleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view:View= inflater.inflate(R.layout.fragment_article, container, false)
-        viewModel=(activity as NewsActivity).viewModel
+        val view: View = inflater.inflate(R.layout.fragment_article, container, false)
+        viewModel = (activity as NewsActivity).viewModel
 
         return view
     }

@@ -5,6 +5,6 @@ import com.androiddevs.mvvmnewsapp.repositories.NewsRepository
 
 class NewsViewModel(
     val newRepository: NewsRepository
-):ViewModel() {
+) : ViewModel() {
 
 }
