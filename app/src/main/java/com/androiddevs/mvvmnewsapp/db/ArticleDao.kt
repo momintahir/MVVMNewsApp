@@ -1,10 +1,8 @@
 package com.androiddevs.mvvmnewsapp.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.androiddevs.mvvmnewsapp.Article
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.androiddevs.mvvmnewsapp.models.Article
 
 @Dao
 interface ArticleDao {
@@ -12,5 +10,9 @@ interface ArticleDao {
     suspend fun upsert(article: Article):Long
 
     @Query("select * from articles")
+    fun getAllArticles():LiveData<List<Article>>
+
+    @Delete
+    suspend fun deleteArticle(article: Article)
 
 }
