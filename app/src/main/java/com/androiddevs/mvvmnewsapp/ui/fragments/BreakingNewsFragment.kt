@@ -2,14 +2,16 @@ package com.androiddevs.mvvmnewsapp.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.adapters.NewsAdapter
+import com.androiddevs.mvvmnewsapp.models.Article
 import com.androiddevs.mvvmnewsapp.ui.NewsActivity
 import com.androiddevs.mvvmnewsapp.ui.viewmodels.NewsViewModel
 import com.androiddevs.mvvmnewsapp.util.Resource
@@ -29,6 +31,17 @@ class BreakingNewsFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_breaking_news, container, false)
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView(view)
+
+//        newsAdapter.setOnItemClickListener {
+//            val bundle=Bundle().apply {
+//                putParcelable("article",it)
+//            }
+//
+//                findNavController().navigate(
+//                    R.id.action_breakingNewsFragment_to_articleFragment,bundle
+//                )
+//        }
+
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
@@ -54,6 +67,17 @@ class BreakingNewsFragment : Fragment() {
 
         })
         return view
+    }
+
+    fun onClickCalled(article: Article) {
+        // Call another acitivty here and pass some arguments to it.
+        val bundle=Bundle().apply {
+            putParcelable("article",article)
+        }
+
+        findNavController().navigate(
+            R.id.action_breakingNewsFragment_to_articleFragment,bundle
+        )
     }
 
     private fun showProgressBar() {
