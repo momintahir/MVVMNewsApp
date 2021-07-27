@@ -7,24 +7,24 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.mvvmnewsapp.R
+import com.androiddevs.mvvmnewsapp.interfaces.OnItemClickListener
 import com.androiddevs.mvvmnewsapp.models.Article
 import com.androiddevs.mvvmnewsapp.ui.fragments.BreakingNewsFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_article_preview.view.*
 
 
-class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
-
+class NewsAdapter(var onItemClickListener: OnItemClickListener) :
+    RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): NewsAdapter.ArticleViewHolder {
         return ArticleViewHolder(
-            (
-                    LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_article_preview, parent, false
-                    ))
+            (LayoutInflater.from(parent.context).inflate(
+                R.layout.item_article_preview, parent, false
+            ))
         )
     }
 
@@ -37,14 +37,9 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
             tvDescription.text = article.description
             tvPublishedAt.text = article.publishedAt
 
-//            setOnClickListener {
-//                onItemClickListener?.let { it(article) }
-//            }
-//
             setOnClickListener {
-                (context as BreakingNewsFragment).onClickCalled(article)
+                onItemClickListener.onItemClickListener(article)
             }
-
         }
     }
 
@@ -52,14 +47,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         return differ.currentList.size
     }
 
-    private var onItemClickListener: ((Article) -> Unit)? = null
-
-    fun setOnItemClickListener(listener: (Article) -> Unit) {
-        onItemClickListener = listener
-    }
-
     inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
 
     private val differCallBack = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -69,10 +57,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem == newItem
         }
-
     }
-
     val differ = AsyncListDiffer(this, differCallBack)
-
 
 }

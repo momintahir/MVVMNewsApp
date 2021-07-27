@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.adapters.NewsAdapter
+import com.androiddevs.mvvmnewsapp.interfaces.OnItemClickListener
 import com.androiddevs.mvvmnewsapp.models.Article
 import com.androiddevs.mvvmnewsapp.ui.NewsActivity
 import com.androiddevs.mvvmnewsapp.ui.viewmodels.NewsViewModel
@@ -31,16 +32,6 @@ class BreakingNewsFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_breaking_news, container, false)
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView(view)
-
-//        newsAdapter.setOnItemClickListener {
-//            val bundle=Bundle().apply {
-//                putParcelable("article",it)
-//            }
-//
-//                findNavController().navigate(
-//                    R.id.action_breakingNewsFragment_to_articleFragment,bundle
-//                )
-//        }
 
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
@@ -69,17 +60,6 @@ class BreakingNewsFragment : Fragment() {
         return view
     }
 
-    fun onClickCalled(article: Article) {
-        // Call another acitivty here and pass some arguments to it.
-        val bundle=Bundle().apply {
-            putParcelable("article",article)
-        }
-
-        findNavController().navigate(
-            R.id.action_breakingNewsFragment_to_articleFragment,bundle
-        )
-    }
-
     private fun showProgressBar() {
         paginationProgressBar.visibility = View.VISIBLE
     }
@@ -89,7 +69,17 @@ class BreakingNewsFragment : Fragment() {
     }
 
     private fun setupRecyclerView(view: View) {
-        newsAdapter = NewsAdapter()
+        newsAdapter = NewsAdapter(object :OnItemClickListener{
+            override fun onItemClickListener(article: Article) {
+                val bundle = Bundle().apply {
+                    putParcelable("article", article)
+                }
+                findNavController().navigate(
+                    R.id.action_breakingNewsFragment_to_articleFragment, bundle
+                )
+            }
+
+        })
         view.rvBreakingNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
