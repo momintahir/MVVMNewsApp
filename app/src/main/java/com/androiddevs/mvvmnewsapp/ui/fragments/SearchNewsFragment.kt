@@ -156,12 +156,12 @@ class SearchNewsFragment : Fragment() {
                     putParcelable("article", article)
                 }
                 findNavController().navigate(
-                    R.id.action_breakingNewsFragment_to_articleFragment, bundle
+                    R.id.action_searchNewsFragment_to_articleFragment, bundle
                 )
             }
 
         })
-        view.rvBreakingNews.apply {
+        view.rvSearchNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(this@SearchNewsFragment.scrollListener)
